@@ -14,4 +14,12 @@ public class UserService {
         List<User> users = userRepository.findAll();
         return users;
     }
+
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    public boolean existsByUsername(String string) {
+        return userRepository.existsByUsername(string);
+    }
 }
