@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/home/Home";
+import Login from "./pages/auth/Login";
 
 function App() {
   return (
-    <div className="bg-red-400">My App page</div>
-  )
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/auth/login" element={<Login />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
