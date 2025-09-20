@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button";
 
 function Login() {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -30,7 +31,7 @@ function Login() {
 
       localStorage.setItem("token", data.token);
 
-      navigate("")    // Define where to navigate the user
+      navigate("/explore")    // Define where to navigate the user
     } catch (error) {
       console.error("Error:", error.message);
     }
@@ -51,7 +52,7 @@ function Login() {
           name="password"
           placeholder="Password"
         />
-        <button type="submit">Log In</button>
+        <Button text="Log In Here" type="submit" />
       </form>
     </div>
   );
