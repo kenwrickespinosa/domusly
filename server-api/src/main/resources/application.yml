@@ -2,10 +2,10 @@ spring:
   application:
     name: server-api
   datasource:
-    url:
-    username:
-    password:
-    driver-class-name:
+    url: jdbc:mysql://localhost:3306/domusly?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: Kenwrickespinosa_012404
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
@@ -13,6 +13,7 @@ spring:
     properties:
       hibernate:
         format-sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
 
 server:
   port: 8080
@@ -21,6 +22,9 @@ application:
   security:
     jwt:
       secret-key: thisIsMysecregtfrdesww233eggtffeeddgkjjhhtdhttebd54ndhdhfhhhshs8877465sbbdd
-      expiration: 86400000 # a day
-      refresh-token:
-        expiration: 604800000 # 7 days
+      expiration: 180000 # a day
+      # refresh-token:
+      #   expiration: 604800000 # 7 days
+
+      # 180000    3 minutes
+      # 86400000    a day

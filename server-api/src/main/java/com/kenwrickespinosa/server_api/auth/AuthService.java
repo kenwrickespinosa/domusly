@@ -51,6 +51,7 @@ public class AuthService {
         newUser.setLastname(user.getLastname());
         newUser.setGender(user.getGender());
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        newUser.setRole(user.getRole());
 
         return userService.save(newUser);
     }
