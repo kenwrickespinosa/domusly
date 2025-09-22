@@ -22,9 +22,10 @@ application:
   security:
     jwt:
       secret-key: thisIsMysecregtfrdesww233eggtffeeddgkjjhhtdhttebd54ndhdhfhhhshs8877465sbbdd
-      expiration: 180000 # a day
+      expiration: 3600000
       # refresh-token:
       #   expiration: 604800000 # 7 days
 
       # 180000    3 minutes
+      # 3600000   1 hour
       # 86400000    a day
