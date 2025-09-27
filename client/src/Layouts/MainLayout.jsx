@@ -1,13 +1,15 @@
 import React from "react";
-import Sidebar from "../pages/explore/Sidebar";
+import Sidebar from "../components/Sidebar";
 import { Outlet } from "react-router-dom";
 
 function MainLayout() {
   return (
     <div className="grid grid-cols-[250px_1fr] h-screen">
-      <Sidebar />
+      <div>
+        <Sidebar />
+      </div>
 
-      <main className="bg-red-200 overflow-y-auto">
+      <main className="overflow-y-auto">
         <Outlet />
       </main>
     </div>

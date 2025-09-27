@@ -24,7 +24,7 @@ function Sidebar() {
             textDecoration: "none",
           })}
         >
-          Post
+          Create Post
         </NavLink>
       </nav>
     </aside>

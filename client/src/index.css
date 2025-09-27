@@ -4,4 +4,7 @@
 /* @tailwindcss */
 @theme {
     --font-sans: "Inter", sans-serif;
+
+    /* Custom colors */
+    --color-custom-pink: #f29dee;
 }
