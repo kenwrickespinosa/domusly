@@ -1,5 +1,6 @@
 package com.kenwrickespinosa.server_api.post;
 
+import java.math.BigDecimal;
 import java.util.Set;
 import java.util.UUID;
 
@@ -20,6 +21,7 @@ public class PostRequest {
     private String type;    // rent | sale
     private String propertyType;    // house | apartment | dorm | condo
     private int capacity;
+    private BigDecimal price;
 
     // private UUID userId;
 

@@ -1,5 +1,6 @@
 package com.kenwrickespinosa.server_api.post;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,6 +13,7 @@ import org.hibernate.annotations.UuidGenerator;
 import com.kenwrickespinosa.server_api.amenity.Amenity;
 import com.kenwrickespinosa.server_api.user.User;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +22,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -45,6 +48,7 @@ public class Post {
     private String type;    // rent | sale
     private String propertyType;    // house | apartment | dorm | condo
     private int capacity;
+    private BigDecimal price;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -63,4 +67,7 @@ public class Post {
         inverseJoinColumns = @JoinColumn(name = "amenity_id")
     )
     private Set<Amenity> amenities = new HashSet<>();
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<PostImage> postImage = new HashSet<>();
 }
