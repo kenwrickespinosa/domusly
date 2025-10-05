@@ -7,6 +7,11 @@ function FormPost() {
   const [statusType, setStatusType] = useState("Rent");
   const [propertyType, setPropertyType] = useState("House");
   
+  const [caption, setCaption] = useState("");
+
+  const [price, setPrice] = useState(0);
+  const [capacity, setCapacity] = useState(1);
+
   const [images, setImages] = useState([]);
   const imgInputRef = useRef(null);
 
@@ -87,7 +92,9 @@ function FormPost() {
           <p className="font-bold">CAPTION</p>
           <textarea
             placeholder="Write a caption..."
+            value={caption}
             rows="3"
+            onChange={(e) => setCaption(e.target.value)}
             className="border w-full py-2 px-5"
           ></textarea>
         </div>
@@ -116,12 +123,16 @@ function FormPost() {
             <input
               type="text"
               placeholder="Price"
+              value={price}
               className="border border-neutral-500 px-5"
+              onChange={(e) => setPrice(e.target.value)}
             />
             <input
               type="text"
               placeholder="Capacity"
+              value={capacity}
               className="border border-neutral-500 px-5"
+              onChange={handleCapacityInput}
             />
           </div>
         </div>
@@ -130,6 +141,7 @@ function FormPost() {
           <div>
             <button
               type="button"
+              aria-label="Upload property images"
               onClick={() => imgInputRef.current.click()}
               className="cursor-pointer"
             >
