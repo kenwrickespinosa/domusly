@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 function MainLayout() {
   return (
     <div className="grid grid-cols-[250px_1fr] h-screen">
-      <div className="bg-custom-blue">
+      <div className="bg-blue-200">
         <Sidebar />
       </div>
 

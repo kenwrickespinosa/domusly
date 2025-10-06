@@ -1,6 +1,7 @@
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Button from "../../components/Button";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -31,28 +32,40 @@ function Login() {
 
       localStorage.setItem("token", data.token);
 
-      navigate("/explore")    // Define where to navigate the user
+      navigate("/explore"); // Define where to navigate the user
     } catch (error) {
       console.error("Error:", error.message);
     }
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
+    <div className="grid grid-cols-2 bg-neutral-100 h-screen justify-center items-center">
+      <div>
+        <p className="text-center font-bold text-[#0061ff] text-6xl">Welcome back!</p>
+        <p className="text-center font-medium text-2xl">Discover more places that fit your lifestyle</p>
+      </div>
+      <form onSubmit={handleSubmit} className="m-32 space-y-5 border px-10 py-10 bg-white shadow">
+        <Input
           type="text"
           onChange={handleChange}
           name="username"
           placeholder="Username"
+          className="py-6 text-2xl font-semibold bg-white"
         />
-        <input
+        <Input
           type="password"
           onChange={handleChange}
           name="password"
           placeholder="Password"
+          className="py-6 text-2xl font-semibold bg-white"
         />
-        <Button text="Log In Here" type="submit" />
+        <Button type="submit" className="bg-[#0061ff] text-white w-full">
+          Log In
+        </Button>
+        <div>
+          <hr />
+          <Link to="/">Create an account</Link>
+        </div>
       </form>
     </div>
   );
