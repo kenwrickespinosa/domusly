@@ -2,7 +2,7 @@ import React from "react";
 
 function PostCard({ post }) {
   return (
-    <div className="border p-10 my-5 rounded-2xl shadow-2xl">
+    <div className="border p-10 my-5 rounded-2xl shadow">
       <div className="grid grid-cols-[3rem_1fr_auto] gap-3 mb-5">
         <div className="border rounded-full w-12 h-12 text-center flex justify-center items-center">
           img

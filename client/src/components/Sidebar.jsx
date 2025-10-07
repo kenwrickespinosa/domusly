@@ -15,7 +15,8 @@ function Sidebar() {
             textDecoration: "none",
             borderTopLeftRadius: 25,
             borderBottomLeftRadius: 25,
-            padding: 5
+            padding: 5,
+            fontSize: 20
           })}
         >
           Explore
@@ -29,7 +30,8 @@ function Sidebar() {
             textDecoration: "none",
             borderTopLeftRadius: 25,
             borderBottomLeftRadius: 25,
-            padding: 5
+            padding: 5,
+            fontSize: 20
           })}
         >
           Create Post

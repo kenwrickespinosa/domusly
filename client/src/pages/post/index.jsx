@@ -3,7 +3,7 @@ import FormPost from "./FormPost";
 
 function Post() {
   return (
-    <div className="bg-neutral-50 py-10">
+    <div className="">
       <FormPost />
     </div>
   );

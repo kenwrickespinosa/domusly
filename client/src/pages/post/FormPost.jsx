@@ -1,16 +1,33 @@
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import React, { useRef, useState } from "react";
+
+const now = new Date();
+const months = {
+  1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June",
+  7: "July", 8: "August", 9: "September", 10: "October", 11: "November", 12: "December"
+};
 
 function FormPost() {
   const amenityList = ["Pool", "Security", "Pet-friendly", "Parking", "Wi-Fi"];
   const [selectedAmenities, setSelectedAmenities] = useState([]);
 
-  const [statusType, setStatusType] = useState("Rent");
-  const [propertyType, setPropertyType] = useState("House");
-  
+  const [statusType, setStatusType] = useState("rent");
+  const [propertyType, setPropertyType] = useState("house");
+
   const [caption, setCaption] = useState("");
 
-  const [price, setPrice] = useState(0);
   const [capacity, setCapacity] = useState(1);
+  const [price, setPrice] = useState(0);
 
   const [images, setImages] = useState([]);
   const imgInputRef = useRef(null);
@@ -32,6 +49,10 @@ function FormPost() {
     setImages((prevImg) => [...prevImg, ...files]);
   };
 
+  const removeImage = (index) => {
+    setImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (images.length < 1) {
@@ -50,103 +71,110 @@ function FormPost() {
     setCapacity(String(value));
   };
 
+  const formatMonth = () => {
+    return months[now.getMonth() + 1];
+  }
+
   return (
-    <div className="border rounded-2xl mx-20 bg-white shadow-2xl">
-      <p className="font-bold my-10 text-4xl border-b border-neutral-500 px-16">
-        NEW POST
-      </p>
-      <form onSubmit={handleSubmit}>
-        {/* First group */}
-        <div className="grid grid-cols-[4rem_1fr_auto] px-16 border mx-10 p-5 mb-10">
-          <div className="border rounded-full w-12 h-12"></div>
-          <div>
-            <p>Firstname Lastname</p>
-            <p className="text-neutral-500">
-              {new Date().toLocaleDateString()}
-            </p>
-          </div>
-          <div className="grid grid-rows-2">
-            <select
-              id="statusType"
-              value={statusType}
-              onChange={(e) => setStatusType(e.target.value)}
-            >
-              <option value="Rent">Rent</option>
-              <option value="Sale">Sale</option>
-            </select>
-            <select
-              id="propertyType"
-              value={propertyType}
-              onChange={(e) => setPropertyType(e.target.value)}
-            >
-              <option value="House">House</option>
-              <option value="Apartment">Apartment</option>
-              <option value="Warehouse">Warehouse</option>
-              <option value="condominium">Condominium</option>
-              <option value="Office">Office</option>
-            </select>
-          </div>
-        </div>
-        {/* Second group */}
-        <div className="px-16 border mx-10 p-5 mb-10">
-          <p className="font-bold">CAPTION</p>
-          <textarea
-            placeholder="Write a caption..."
-            value={caption}
-            rows="3"
-            onChange={(e) => setCaption(e.target.value)}
-            className="border w-full py-2 px-5"
-          ></textarea>
-        </div>
-        {/* Third group */}
-        <div className="grid grid-cols-3 px-16 border mx-10 p-5 mb-10">
-          <div className="col-span-2 text-center">
-            <p className="mb-5">Amenities</p>
+    <div className="border">
+      <div className="grid grid-rows-2">
+        <p>Create a post</p>
+        <div className="flex justify-between">
+          <div className="flex gap-2">
+            <div className="border rounded-full w-[50px] h-[50px]"></div>
             <div>
-              {amenityList.map((amenity, index) => (
-                <button
-                  key={index}
-                  type="button"
-                  onClick={() => toggleAmenity(amenity)}
-                  className={`px-2.5 py-2 rounded-2xl border mx-1 cursor-pointer ${
-                    selectedAmenities.indexOf(amenity) !== -1
-                      ? "bg-custom-blue text-white border-custom-blue"
-                      : "bg-white text-neutral-500 border-neutral-500"
-                  }`}
-                >
-                  {amenity}
-                </button>
-              ))}
+              <p>Firstname Lastname</p>
+              <p>Username</p>
             </div>
           </div>
-          <div className="grid grid-rows-2 gap-2">
-            <input
-              type="text"
-              placeholder="Price"
-              value={price}
-              className="border border-neutral-500 px-5"
-              onChange={(e) => setPrice(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Capacity"
-              value={capacity}
-              className="border border-neutral-500 px-5"
-              onChange={handleCapacityInput}
-            />
+          <div className="flex flex-col items-end">
+            <p className="text-neutral-500">Posting Date & Time</p>
+            <div className="flex gap-4">
+              <p>{formatMonth()} {now.getDate()}, {now.getFullYear()}</p>
+              <p>{now.getHours()}:{now.getMinutes()}</p>
+            </div>
           </div>
         </div>
-        {/* Fourth group */}
-        <div className="px-16 border mx-10 p-5 mb-10">
+      </div>
+      <form onSubmit={handleSubmit}>
+        <div className="flex gap-2">
+          <Select
+            onValueChange={(value) => setStatusType(value)}
+            value={statusType}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Select type</SelectLabel>
+                <SelectItem value="rent">Rent</SelectItem>
+                <SelectItem value="sale">Sale</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select
+            onValueChange={(value) => setPropertyType(value)}
+            value={propertyType}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select property type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Select property type</SelectLabel>
+                <SelectItem value="house">House</SelectItem>
+                <SelectItem value="apartment">Apartment</SelectItem>
+                <SelectItem value="warehouse">Warehouse</SelectItem>
+                <SelectItem value="condominium">Condominium</SelectItem>
+                <SelectItem value="office">Office</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <div>
+          <Input type="text" placeholder="Caption" />
+        </div>
+        <div>
+          <p className="text-neutral-600">Amenities</p>
+          <div className="grid grid-cols-3">
+            {amenityList.map((amenity, index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => toggleAmenity(amenity)}
+                className={`w-40 h-10 rounded border border-neutral-200 mx-1 my-1 cursor-pointer ${
+                  selectedAmenities.indexOf(amenity) !== -1
+                    ? "bg-custom-blue text-white border-custom-blue"
+                    : "bg-white text-neutral-500 border-neutral-500"
+                }`}
+              >
+                {amenity}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div>
+          <Input
+            type="number"
+            onChange={(value) => setCapacity(value)}
+            value={capacity}
+          />
+          <Input
+            type="number"
+            onChange={(value) => setPrice(value)}
+            value={price}
+          />
+        </div>
+        <div className="border border-dashed">
           <div>
-            <button
+            <Button
               type="button"
-              aria-label="Upload property images"
               onClick={() => imgInputRef.current.click()}
-              className="cursor-pointer"
+              className="cursor-pointer bg-white text-black"
             >
               Upload Images
-            </button>
+            </Button>
             <input
               type="file"
               accept="image/*"
@@ -156,36 +184,27 @@ function FormPost() {
               className="hidden"
             />
           </div>
-          <div className="flex gap-2 mt-2 flex-wrap ">
+          <div className="flex gap-2 mt-2 flex-wrap">
             {images.map((img, index) => (
-              <div key={index} className="relative">
+              <div key={index} className="relative w-32 h-32">
                 <img
                   src={URL.createObjectURL(img)}
-                  alt="preview"
-                  className="w-24 h-24 object-cover rounded-lg border"
+                  alt="Preview"
+                  className="w-full h-full object-cover rounded-lg shadow-md"
                 />
-                <button
+                <Button
                   type="button"
-                  onClick={() =>
-                    setImages(images.filter((_, i) => i !== index))
-                  }
-                  className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
+                  onClick={() => removeImage(index)}
+                  className="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white rounded-full 
+                   w-6 h-6 flex items-center justify-center text-xs shadow-md transition-all"
                 >
-                  ✕
-                </button>
+                  X
+                </Button>
               </div>
             ))}
           </div>
         </div>
-        <div className="text-center mx-10 p-5 mb-10">
-          <button
-            type="submit"
-            className="border px-10 py-2 font-bold rounded-3xl text-2xl cursor-pointer 
-            hover:bg-custom-blue hover:text-white hover:border-custom-blue"
-          >
-            Post
-          </button>
-        </div>
+        <button type="submit">Post</button>
       </form>
     </div>
   );
