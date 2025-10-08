@@ -1,15 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
+import Hero from "./Hero";
+import Services from "./Services";
 
 function Home() {
   return (
-    <div>
-      <div>
-        <Navbar />
-      </div>
-      <div>
-        <Link to="/auth/login">Login</Link>
+    <div className="">
+      <Navbar />
+      <div className="">
+        <Hero />
+        <Services />
       </div>
     </div>
   );

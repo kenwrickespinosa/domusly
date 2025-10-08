@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -9,12 +10,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
 import React, { useRef, useState } from "react";
 
 const now = new Date();
 const months = {
-  1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June",
-  7: "July", 8: "August", 9: "September", 10: "October", 11: "November", 12: "December"
+  1: "January",
+  2: "February",
+  3: "March",
+  4: "April",
+  5: "May",
+  6: "June",
+  7: "July",
+  8: "August",
+  9: "September",
+  10: "October",
+  11: "November",
+  12: "December",
 };
 
 function FormPost() {
@@ -73,70 +85,97 @@ function FormPost() {
 
   const formatMonth = () => {
     return months[now.getMonth() + 1];
-  }
+  };
+
+  const formatTime = () => {
+    const formattedTime = new Intl.DateTimeFormat("default", {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    }).format(now);
+    return formattedTime;
+  };
 
   return (
-    <div className="border">
+    <div className="border flex flex-col gap-12 w-full max-w-4xl mx-auto px-12 py-6 shadow rounded-2xl bg-white">
       <div className="grid grid-rows-2">
-        <p>Create a post</p>
+        <p className="text-center text-2xl font-semibold">Create Post</p>
         <div className="flex justify-between">
-          <div className="flex gap-2">
-            <div className="border rounded-full w-[50px] h-[50px]"></div>
+          <div className="flex items-center gap-2">
+            <div className="border rounded-full w-[65px] h-[65px]"></div>
             <div>
               <p>Firstname Lastname</p>
               <p>Username</p>
             </div>
           </div>
-          <div className="flex flex-col items-end">
+          <div className="flex flex-col items-end border py-2 px-4">
             <p className="text-neutral-500">Posting Date & Time</p>
             <div className="flex gap-4">
-              <p>{formatMonth()} {now.getDate()}, {now.getFullYear()}</p>
-              <p>{now.getHours()}:{now.getMinutes()}</p>
+              <p>
+                {formatMonth()} {now.getDate()}, {now.getFullYear()}
+              </p>
+              <p>{formatTime()}</p>
             </div>
           </div>
         </div>
       </div>
-      <form onSubmit={handleSubmit}>
-        <div className="flex gap-2">
-          <Select
-            onValueChange={(value) => setStatusType(value)}
-            value={statusType}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Select type</SelectLabel>
-                <SelectItem value="rent">Rent</SelectItem>
-                <SelectItem value="sale">Sale</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <Select
-            onValueChange={(value) => setPropertyType(value)}
-            value={propertyType}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select property type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Select property type</SelectLabel>
-                <SelectItem value="house">House</SelectItem>
-                <SelectItem value="apartment">Apartment</SelectItem>
-                <SelectItem value="warehouse">Warehouse</SelectItem>
-                <SelectItem value="condominium">Condominium</SelectItem>
-                <SelectItem value="office">Office</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+      <Separator />
+      <form onSubmit={handleSubmit} className="flex flex-col gap-12">
+        <div className="grid grid-cols-2 gap-2">
+          <div>
+            <Label className="text-neutral-500">Type</Label>
+            <Select
+              onValueChange={(value) => setStatusType(value)}
+              id="status-type"
+              value={statusType}
+            >
+              <SelectTrigger className="">
+                <SelectValue placeholder="Select type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Select type</SelectLabel>
+                  <SelectItem value="rent">Rent</SelectItem>
+                  <SelectItem value="sale">Sale</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <Label className="text-neutral-500">Property Type</Label>
+            <Select
+              onValueChange={(value) => setPropertyType(value)}
+              id="property-type"
+              value={propertyType}
+            >
+              <SelectTrigger className="">
+                <SelectValue placeholder="Select property type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Select property type</SelectLabel>
+                  <SelectItem value="house">House</SelectItem>
+                  <SelectItem value="apartment">Apartment</SelectItem>
+                  <SelectItem value="warehouse">Warehouse</SelectItem>
+                  <SelectItem value="condominium">Condominium</SelectItem>
+                  <SelectItem value="office">Office</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
         <div>
-          <Input type="text" placeholder="Caption" />
+          <Label htmlFor="caption" className="text-neutral-500">
+            Caption
+          </Label>
+          <Input
+            type="text"
+            id="caption"
+            placeholder="Describe your property... location, features, neighborhood, etc."
+          />
         </div>
         <div>
-          <p className="text-neutral-600">Amenities</p>
+          <p className="text-neutral-500 font-medium">Amenities</p>
           <div className="grid grid-cols-3">
             {amenityList.map((amenity, index) => (
               <button
@@ -145,7 +184,7 @@ function FormPost() {
                 onClick={() => toggleAmenity(amenity)}
                 className={`w-40 h-10 rounded border border-neutral-200 mx-1 my-1 cursor-pointer ${
                   selectedAmenities.indexOf(amenity) !== -1
-                    ? "bg-custom-blue text-white border-custom-blue"
+                    ? "bg-[#0061ff] text-white font-semibold border-custom-blue"
                     : "bg-white text-neutral-500 border-neutral-500"
                 }`}
               >
@@ -154,20 +193,36 @@ function FormPost() {
             ))}
           </div>
         </div>
-        <div>
-          <Input
-            type="number"
-            onChange={(value) => setCapacity(value)}
-            value={capacity}
-          />
-          <Input
-            type="number"
-            onChange={(value) => setPrice(value)}
-            value={price}
-          />
-        </div>
-        <div className="border border-dashed">
+        <div className="grid grid-cols-2 gap-2">
           <div>
+            <Label htmlFor="capacity" className="text-neutral-500">Capacity</Label>
+            <Input
+              type="number"
+              id="capacity"
+              onChange={(e) => setCapacity(Number(e.target.value))}
+              value={capacity}
+              step="1"
+              min="1"
+              max=""
+              className=""
+            />
+          </div>
+          <div>
+            <Label htmlFor="price" className="text-neutral-500">Price</Label>
+            <Input
+              type="number"
+              id="price"
+              onChange={(e) => setPrice(Number(e.target.value))}
+              value={price}
+              step="1"
+              min="0"
+              max=""
+              className=""
+            />
+          </div>
+        </div>
+        <div className="flex flex-col gap-6 border-2 border-dashed p-20">
+          <div className="text-center">
             <Button
               type="button"
               onClick={() => imgInputRef.current.click()}
@@ -204,7 +259,9 @@ function FormPost() {
             ))}
           </div>
         </div>
-        <button type="submit">Post</button>
+        <Button type="submit" className="bg-[#0061ff] text-2xl py-6">
+          Post
+        </Button>
       </form>
     </div>
   );
