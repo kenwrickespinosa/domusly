@@ -38,8 +38,8 @@ function FormPost() {
 
   const [caption, setCaption] = useState("");
 
-  const [capacity, setCapacity] = useState(1);
-  const [price, setPrice] = useState(0);
+  const [capacity, setCapacity] = useState("1");
+  const [price, setPrice] = useState("0");
 
   const [images, setImages] = useState([]);
   const imgInputRef = useRef(null);
@@ -65,13 +65,37 @@ function FormPost() {
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (images.length < 1) {
-      alert("Must upload at least 1 image");
-      return;
+
+    const postData = {
+      caption,
+      capacity: Number(capacity),
+      price: Number(price),
+      type: statusType,
+      propertyType,
+      amenities: selectedAmenities,
+    };
+
+    try {
+      const response = await fetch("http://localhost:8080/api/posts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(postData)
+      });
+
+      if (!response.ok) {
+        throw new Error("Unable to create a post");
+      }
+
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log("Error:", error);
     }
-    alert("Wow! saved...");
   };
 
   const handleCapacityInput = (e) => {
@@ -171,6 +195,8 @@ function FormPost() {
           <Input
             type="text"
             id="caption"
+            value={caption}
+            onChange={(e) => setCaption(e.target.value)}
             placeholder="Describe your property... location, features, neighborhood, etc."
           />
         </div>
@@ -195,11 +221,13 @@ function FormPost() {
         </div>
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <Label htmlFor="capacity" className="text-neutral-500">Capacity</Label>
+            <Label htmlFor="capacity" className="text-neutral-500">
+              Capacity
+            </Label>
             <Input
               type="number"
               id="capacity"
-              onChange={(e) => setCapacity(Number(e.target.value))}
+              onChange={(e) => setCapacity(e.target.value)}
               value={capacity}
               step="1"
               min="1"
@@ -208,11 +236,13 @@ function FormPost() {
             />
           </div>
           <div>
-            <Label htmlFor="price" className="text-neutral-500">Price</Label>
+            <Label htmlFor="price" className="text-neutral-500">
+              Price
+            </Label>
             <Input
               type="number"
               id="price"
-              onChange={(e) => setPrice(Number(e.target.value))}
+              onChange={(e) => setPrice(e.target.value)}
               value={price}
               step="1"
               min="0"

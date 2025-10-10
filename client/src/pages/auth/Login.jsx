@@ -39,12 +39,22 @@ function Login() {
   };
 
   return (
-    <div className="grid grid-cols-2 bg-neutral-100 h-screen justify-center items-center">
+    <div
+      className="max-md:flex max-md:flex-col grid grid-cols-2 bg-neutral-100 h-screen justify-center 
+      items-center"
+    >
       <div>
-        <p className="text-center font-bold text-[#0061ff] text-6xl">Welcome back!</p>
-        <p className="text-center font-medium text-2xl">Discover more places that fit your lifestyle</p>
+        <p className="max-md:text-4xl text-center font-bold text-[#0061ff] text-6xl">
+          Welcome back!
+        </p>
+        <p className="max-md:text-sm text-center font-medium text-2xl">
+          Discover more places that fit your lifestyle
+        </p>
       </div>
-      <form onSubmit={handleSubmit} className="m-32 space-y-5 border px-10 py-10 bg-white shadow">
+      <form
+        onSubmit={handleSubmit}
+        className="m-32 space-y-5 border px-10 py-10 bg-white shadow"
+      >
         <Input
           type="text"
           onChange={handleChange}
