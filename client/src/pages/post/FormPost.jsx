@@ -13,6 +13,8 @@ import {
 import { Separator } from "@/components/ui/separator";
 import React, { useRef, useState } from "react";
 
+import { FaRegCalendarAlt } from "react-icons/fa";
+
 const now = new Date();
 const months = {
   1: "January",
@@ -84,7 +86,7 @@ function FormPost() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify(postData)
+        body: JSON.stringify(postData),
       });
 
       if (!response.ok) {
@@ -121,7 +123,7 @@ function FormPost() {
   };
 
   return (
-    <div className="border flex flex-col gap-12 w-full max-w-4xl mx-auto px-12 py-6 shadow rounded-2xl bg-white">
+    <div className="border border-neutral-200 flex flex-col gap-12 w-full max-w-4xl mx-auto px-12 py-6 shadow rounded-2xl bg-white">
       <div className="grid grid-rows-2">
         <p className="text-center text-2xl font-semibold">Create Post</p>
         <div className="flex justify-between">
@@ -133,7 +135,10 @@ function FormPost() {
             </div>
           </div>
           <div className="flex flex-col items-end border py-2 px-4">
-            <p className="text-neutral-500">Posting Date & Time</p>
+            <p className="flex items-center gap-2 text-neutral-500">
+              Posting Date & Time
+              <FaRegCalendarAlt className="text-[#0061ff]" />
+            </p>
             <div className="flex gap-4">
               <p>
                 {formatMonth()} {now.getDate()}, {now.getFullYear()}
