@@ -10,7 +10,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kenwrickespinosa.server_api.amenity.Amenity;
+import com.kenwrickespinosa.server_api.savedListing.SavedListing;
 import com.kenwrickespinosa.server_api.user.User;
 
 import jakarta.persistence.CascadeType;
@@ -70,4 +72,8 @@ public class Post {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PostImage> postImage = new HashSet<>();
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Set<SavedListing> savedListings = new HashSet<>();
 }

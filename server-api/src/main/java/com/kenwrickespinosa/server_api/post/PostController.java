@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kenwrickespinosa.server_api.user.User;
@@ -27,8 +28,11 @@ public class PostController {
     private final UserRepository userRepository;
 
     @GetMapping
-    public ResponseEntity<List<PostResponse>> findAll() {
-        List<PostResponse> posts = postService.findAll();
+    public ResponseEntity<List<PostResponse>> findAll(
+        @RequestParam(required = false) String type,
+        @RequestParam(required = false) String propertyType
+    ) {
+        List<PostResponse> posts = postService.findByFilters(type, propertyType);
         return ResponseEntity.ok(posts);
     }
 
