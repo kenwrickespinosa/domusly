@@ -39,7 +39,8 @@ public class SavedListingService {
                 post.getPrice(),
                 post.getUser().getUsername(),
                 post.getCreatedAt(),
-                amenityNames);
+                amenityNames
+        );
     }
 
     public List<SavedListingResponse> findAll() {
@@ -70,22 +71,8 @@ public class SavedListingService {
         savedListing.setUser(user);
         savedListing.setPost(post);
 
-        List<String> amenityNames = post.getAmenities().stream()
-                .map(Amenity::getName)
-                .toList();
+        savedListingRepository.save(savedListing);
 
-        return new SavedListingResponse(
-                post.getPostId(),
-                post.getCaption(),
-                post.getLocation(),
-                post.getContact(),
-                post.getType(),
-                post.getPropertyType(),
-                post.getCapacity(),
-                post.getPrice(),
-                post.getUser().getUsername(),
-                post.getCreatedAt(),
-                amenityNames
-        );
+        return mapToSavedListingResponse(post);
     }
 }
