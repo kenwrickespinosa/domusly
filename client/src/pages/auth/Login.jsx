@@ -28,7 +28,7 @@ function Login() {
       }
 
       const data = await response.json();
-      console.log("Login successfully:", data);
+      // console.log("Login successfully:", data);
 
       localStorage.setItem("token", data.token);
 
@@ -41,7 +41,7 @@ function Login() {
   return (
     <div
       className="max-md:flex max-md:flex-col grid grid-cols-2 bg-neutral-100 h-screen justify-center 
-      items-center"
+      items-center max-md:px-10"
     >
       <div>
         <p className="max-md:text-4xl text-center font-bold text-[#0061ff] text-6xl">
@@ -53,28 +53,28 @@ function Login() {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="m-32 space-y-5 border px-10 py-10 bg-white shadow"
+        className="m-32 space-y-5 border px-10 py-10 bg-white shadow max-md:w-full max-md:m-16"
       >
         <Input
           type="text"
           onChange={handleChange}
           name="username"
           placeholder="Username"
-          className="py-6 text-2xl font-semibold bg-white"
+          className="py-6 text-2xl font-semibold bg-white max-md:text-sm"
         />
         <Input
           type="password"
           onChange={handleChange}
           name="password"
           placeholder="Password"
-          className="py-6 text-2xl font-semibold bg-white"
+          className="py-6 text-2xl font-semibold bg-white max-md:text-sm"
         />
         <Button type="submit" className="bg-[#0061ff] text-white w-full">
           Log In
         </Button>
         <div>
           <hr />
-          <Link to="/">Create an account</Link>
+          <Link to="/" className="text-sm text-neutral-600 md:text-base">Create an account</Link>
         </div>
       </form>
     </div>

@@ -5,6 +5,7 @@ import Login from "./pages/auth/Login";
 import Explore from "./pages/explore";
 import MainLayout from "./Layouts/MainLayout";
 import Post from "./pages/post";
+import Listing from "./pages/listing";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route element={<MainLayout />}>
         <Route path="/explore" element={<Explore />} />
         <Route path="/post" element={<Post />} />
+        <Route path="/saved-listing" element={<Listing />} />
       </Route>
     </Routes>
   );

@@ -36,6 +36,21 @@ function Sidebar() {
         >
           Create Post
         </NavLink>
+        <NavLink
+          to="/saved-listing"
+          style={({ isActive }) => ({
+            backgroundColor: isActive ? "white" : null,
+            color: isActive ? "black" : "white",
+            fontWeight: isActive ? "bold" : "normal",
+            textDecoration: "none",
+            borderTopLeftRadius: 25,
+            borderBottomLeftRadius: 25,
+            padding: 5,
+            fontSize: 20
+          })}
+        >
+          Saved Listing
+        </NavLink>
       </nav>
     </aside>
   );

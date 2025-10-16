@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PostCard from "./PostCard";
+import PostCard from "../../components/PostCard";
 import SearchFilter from "./SearchFilter";
 
 function Explore() {
@@ -35,7 +35,7 @@ function Explore() {
       <div>
         <SearchFilter onSearch={handleSearch} />
       </div>
-      <div className="px-64 py-10">
+      <div className="px-4 md:px-16 lg:px-64 py-10 flex flex-col gap-10">
         {posts.map((post) => (
           <PostCard key={post.postId} post={post} />
         ))}

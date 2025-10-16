@@ -123,7 +123,7 @@ function FormPost() {
   };
 
   return (
-    <div className="border border-neutral-200 flex flex-col gap-12 w-full max-w-4xl mx-auto px-12 py-6 shadow rounded-2xl bg-white">
+    <div className="border border-white flex flex-col gap-12 w-full max-w-4xl mx-auto px-12 py-6 shadow rounded-2xl bg-white">
       <div className="grid grid-rows-2">
         <p className="text-center text-2xl font-semibold">Create Post</p>
         <div className="flex justify-between">
