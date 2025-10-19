@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kenwrickespinosa.server_api.security.JwtService;
 import com.kenwrickespinosa.server_api.user.User;
+import com.kenwrickespinosa.server_api.user.UserResponse;
 import com.kenwrickespinosa.server_api.user.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -57,7 +58,7 @@ public class AuthController {
     }
 
     @GetMapping
-    public ResponseEntity<Map<String, String>> getAuthUser(HttpServletRequest request) {
+    public ResponseEntity<UserResponse> getAuthUser(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -68,10 +69,16 @@ public class AuthController {
         String username = jwtService.getUsernameFromToken(token);
 
         User user = userService.findByUsername(username);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
 
-        Map<String, String> response = new HashMap<>();
-        response.put("Firstname", user.getFirstname());
-        response.put("Lastname", user.getLastname());
+        UserResponse response = new UserResponse(
+            user.getUserId(),
+            user.getFirstname(),
+            user.getLastname(),
+            user.getUsername()
+        );
 
         return ResponseEntity.ok(response);
     }
