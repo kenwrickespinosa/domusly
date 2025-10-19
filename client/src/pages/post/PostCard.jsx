@@ -1,16 +1,46 @@
 import { Separator } from "@/components/ui/separator";
-import React from "react";
+import React, { useContext } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaEnvelope } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
+import { AuthContext } from "@/hooks/contexts/AuthContext";
 
 function PostCard({ post }) {
+  const {user, token} = useContext(AuthContext);
+
+  const saveListing = async () => {
+    if (!user?.userId) {
+      console.log("User ID is undefined!", user);
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/saved-listings?userId=${user.userId}&postId=${post.postId}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          }
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Error to save listing");
+      }
+
+      const data = await response.json();
+    } catch (err) {
+      console.log("Error:", err);
+    }
+  };
   return (
     <div className="flex flex-col gap-5 border p-5 rounded-lg">
       <div className="flex items-center gap-2">
         <div className="border rounded-full w-[35px] h-[35px]"></div>
         <div>
-          <p className="text-sm">Firstname Lastname</p>
+          <p className="text-sm md:text-base">{user.firstname} {user.lastname}</p>
         </div>
       </div>
       <Separator />
@@ -66,16 +96,27 @@ function PostCard({ post }) {
           <Button className="bg-[#0061ff] border-[#0061ff] text-white">
             Contact Owner
           </Button>
-          <Button className="bg-neutral-50 border-neutral-50 text-neutral-600">
+          <Button
+            onClick={saveListing}
+            className="bg-neutral-50 border-neutral-50 text-neutral-600"
+          >
             Save Listing
           </Button>
         </div>
       </div>
       <div className="grid grid-cols-2 grid-rows-2 border">
-        <div className="bg-blue-200 w-[150px] h-[120px] flex items-center justify-center">Img 1</div>
-        <div className="bg-blue-300 w-[150px] h-[120px] flex items-center justify-center">Img 2</div>
-        <div className="bg-blue-400 w-[150px] h-[120px] flex items-center justify-center">Img 3</div>
-        <div className="bg-blue-500 w-[150px] h-[120px] flex items-center justify-center">Img 4</div>
+        <div className="bg-blue-200 w-[150px] h-[120px] flex items-center justify-center">
+          Img 1
+        </div>
+        <div className="bg-blue-300 w-[150px] h-[120px] flex items-center justify-center">
+          Img 2
+        </div>
+        <div className="bg-blue-400 w-[150px] h-[120px] flex items-center justify-center">
+          Img 3
+        </div>
+        <div className="bg-blue-500 w-[150px] h-[120px] flex items-center justify-center">
+          Img 4
+        </div>
       </div>
     </div>
   );

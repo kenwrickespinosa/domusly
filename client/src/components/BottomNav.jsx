@@ -3,10 +3,11 @@ import { Menubar, MenubarMenu, MenubarTrigger } from "./ui/menubar";
 import { NavLink } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { FaPencilAlt } from "react-icons/fa";
+import { MdFavorite } from "react-icons/md";
 
 function BottomNav() {
   return (
-    <Menubar className="md:hidden fixed h-auto bottom-0 left-0 right-0 grid grid-cols-2 bg-white border-t shadow-md">
+    <Menubar className="md:hidden fixed h-auto bottom-0 left-0 right-0 grid grid-cols-3 bg-white border-t shadow-md">
       <MenubarMenu>
         <MenubarTrigger asChild>
           <NavLink
@@ -56,6 +57,33 @@ function BottomNav() {
                   } text-sm`}
                 >
                   Post
+                </span>
+              </>
+            )}
+          </NavLink>
+        </MenubarTrigger>
+      </MenubarMenu>
+      <MenubarMenu>
+        <MenubarTrigger asChild>
+          <NavLink
+            to="/saved-listing"
+            className={({ isActive }) =>
+              `flex flex-col items-center justify-center py-2 transition-colors duration-200`
+            }
+          >
+            {({ isActive }) => (
+              <>
+                <MdFavorite
+                  className={`mb-1 w-5 h-5 ${
+                    isActive ? "text-[#0061ff]" : "text-gray-500"
+                  }`}
+                />
+                <span
+                  className={`${
+                    isActive ? "text-[#0061ff]" : "text-gray-500"
+                  } text-sm`}
+                >
+                  Saved Listing
                 </span>
               </>
             )}
