@@ -25,13 +25,15 @@ public class PostResponse {
     private int capacity;
     private BigDecimal price;
     private String username;
+    private String firstname;
+    private String lastname;
     private LocalDateTime createdAt;
     private List<UUID> amenityIds;
     private List<String> amenityNames;
 
     public PostResponse(UUID postId, String caption, String location, String contact,
             String type, String propertyType, int capacity, BigDecimal price, String username,
-            LocalDateTime createdAt) {
+            String firstname, String lastname, LocalDateTime createdAt) {
         this.postId = postId;
         this.caption = caption;
         this.location = location;
@@ -41,12 +43,14 @@ public class PostResponse {
         this.capacity = capacity;
         this.price = price;
         this.username = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.createdAt = createdAt;
     }
 
     public PostResponse(UUID postId, String caption, String location, String contact,
             String type, String propertyType, int capacity, BigDecimal price, String username,
-            LocalDateTime createdAt, List<String> amenityNames) {
+            String firstname, String lastname, LocalDateTime createdAt, List<String> amenityNames) {
         this.postId = postId;
         this.caption = caption;
         this.location = location;
@@ -56,6 +60,8 @@ public class PostResponse {
         this.capacity = capacity;
         this.price = price;
         this.username = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.createdAt = createdAt;
         this.amenityNames = amenityNames;
     }

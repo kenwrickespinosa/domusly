@@ -44,6 +44,8 @@ public class PostService {
         post.getCapacity(),
         post.getPrice(),
         post.getUser().getUsername(),
+        post.getUser().getFirstname(),
+        post.getUser().getLastname(),
         post.getCreatedAt(),
         amenityIds,
         amenityNames
@@ -109,6 +111,8 @@ public class PostService {
                 savedPost.getCapacity(),
                 savedPost.getPrice(),
                 savedPost.getUser().getUsername(),
+                savedPost.getUser().getFirstname(),
+                savedPost.getUser().getLastname(),
                 savedPost.getCreatedAt());
     }
 }
