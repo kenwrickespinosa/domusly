@@ -11,16 +11,14 @@ import com.kenwrickespinosa.server_api.post.PostRepository;
 import com.kenwrickespinosa.server_api.user.User;
 import com.kenwrickespinosa.server_api.user.UserRepository;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Service
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SavedListingService {
-    private SavedListingRepository savedListingRepository;
-    private UserRepository userRepository;
-    private PostRepository postRepository;
+    private final SavedListingRepository savedListingRepository;
+    private final UserRepository userRepository;
+    private final PostRepository postRepository;
 
     // Helper method - convert Post to SavedListingResponse
     private SavedListingResponse mapToSavedListingResponse(Post post) {

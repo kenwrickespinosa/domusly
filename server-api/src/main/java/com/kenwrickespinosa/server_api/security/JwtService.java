@@ -27,7 +27,7 @@ public class JwtService {
     private Key getSignInKey() {
         // byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
-    } 
+    }
 
     public String generateToken(String username) {
         return Jwts.builder()
@@ -62,8 +62,8 @@ public class JwtService {
             System.out.println("JWT token is unsupported: " + e.getMessage());
         } catch (IllegalArgumentException e) {
             System.out.println("JWT claims string is empty: " + e.getMessage());
-        }
+        } 
         return false;
     }
-    
+
 }
