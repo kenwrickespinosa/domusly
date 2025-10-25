@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import React from "react";
+import React, { useState } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 
-function ListingCard({ listing }) {
+function ListingCard({ listing, onViewDetails }) {
   const substrCaption = () => {
-    const limit = 26
+    const limit = 26;
     if (listing.caption.length > limit) {
       return listing.caption.substring(0, limit) + "...";
     }
@@ -36,7 +36,12 @@ function ListingCard({ listing }) {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full text-white bg-[#0061ff]">View Details</Button>
+        <Button
+          className="w-full text-white bg-[#0061ff]"
+          onClick={onViewDetails}
+        >
+          View Details
+        </Button>
       </CardFooter>
     </Card>
   );
