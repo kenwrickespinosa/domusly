@@ -26,7 +26,7 @@ function ListingCard({ listing }) {
               listing.propertyType.slice(1)}
           </span>
           <span className="flex items-center gap-2">
-            <FaLocationDot className="text-neutral-500" />
+            <FaLocationDot className="text-red-500" />
             <span className="text-neutral-500">{listing.location}</span>
           </span>
           <div className="flex gap-5">

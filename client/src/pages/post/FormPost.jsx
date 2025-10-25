@@ -11,7 +11,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import React, { useRef, useState } from "react";
+import { AuthContext } from "@/hooks/contexts/AuthContext";
+import React, { useContext, useRef, useState } from "react";
 
 import { FaRegCalendarAlt } from "react-icons/fa";
 
@@ -32,6 +33,7 @@ const months = {
 };
 
 function FormPost() {
+  const {user} = useContext(AuthContext);
   const amenityList = ["Pool", "Security", "Pet-friendly", "Parking", "Wi-Fi"];
   const [selectedAmenities, setSelectedAmenities] = useState([]);
 
@@ -130,8 +132,8 @@ function FormPost() {
           <div className="flex items-center gap-2">
             <div className="border rounded-full w-[65px] h-[65px]"></div>
             <div>
-              <p>Firstname Lastname</p>
-              <p>Username</p>
+              <p className="font-semibold md:text-2xl">{user?.firstname} {user?.lastname}</p>
+              <p>@{user?.username}</p>
             </div>
           </div>
           <div className="flex flex-col items-end border py-2 px-4">

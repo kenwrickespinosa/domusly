@@ -6,17 +6,16 @@ import { Button } from "@/components/ui/button";
 import { AuthContext } from "@/hooks/contexts/AuthContext";
 
 function PostCard({ post }) {
-  const {user, token} = useContext(AuthContext);
-
+  const {token} = useContext(AuthContext);
   const saveListing = async () => {
-    if (!user?.userId) {
-      console.log("User ID is undefined!", user);
+    if (!token) {
+      console.log("User not authenticated");
       return;
     }
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/saved-listings?userId=${user.userId}&postId=${post.postId}`,
+        `http://localhost:8080/api/saved-listings?postId=${post.postId}`,
         {
           method: "POST",
           headers: {
@@ -40,7 +39,7 @@ function PostCard({ post }) {
       <div className="flex items-center gap-2">
         <div className="border rounded-full w-[35px] h-[35px]"></div>
         <div>
-          <p className="text-sm md:text-base">{user.firstname} {user.lastname}</p>
+          <p className="text-sm md:text-base">{post.firstname} {post.lastname}</p>
         </div>
       </div>
       <Separator />
