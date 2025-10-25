@@ -3,6 +3,7 @@ package com.kenwrickespinosa.server_api.savedListing;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.kenwrickespinosa.server_api.amenity.Amenity;
@@ -37,40 +38,37 @@ public class SavedListingService {
                 post.getPrice(),
                 post.getUser().getUsername(),
                 post.getCreatedAt(),
-                amenityNames
-        );
+                amenityNames);
     }
 
-    public List<SavedListingResponse> findAll() {
-        List<SavedListing> savedListings = savedListingRepository.findAll();
+    public List<SavedListingResponse> findAllByUser(Authentication authentication) {
+        String username = authentication.getName();
+        User user = userRepository.findByUsername(username);
+
+        List<SavedListing> savedListings = savedListingRepository.findAllByUser(user);
 
         return savedListings.stream()
                 .map(saved -> mapToSavedListingResponse(saved.getPost()))
                 .toList();
     }
 
-    public SavedListingResponse save(UUID userId, UUID postId) {
-        // Find the user
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public SavedListingResponse save(Authentication authentication, UUID postId) {
+        String username = authentication.getName();
+        User user = userRepository.findByUsername(username);
 
-        // Find the post
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("Post not found"));
-                
-        // First check if user already saved this post or not
+
         boolean alreadySaved = savedListingRepository.existsByUserAndPost(user, post);
         if (alreadySaved) {
             throw new RuntimeException("This post is already saved");
         }
 
-        // Save
         SavedListing savedListing = new SavedListing();
         savedListing.setUser(user);
         savedListing.setPost(post);
 
         savedListingRepository.save(savedListing);
-
         return mapToSavedListingResponse(post);
     }
 }

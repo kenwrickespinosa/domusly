@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,17 +23,17 @@ public class SavedListingController {
     private final SavedListingService savedListingService;
 
     @GetMapping
-    public ResponseEntity<List<SavedListingResponse>> findAll() {
-        List<SavedListingResponse> savedListings = savedListingService.findAll();
+    public ResponseEntity<List<SavedListingResponse>> findAll(Authentication authentication) {
+        List<SavedListingResponse> savedListings = savedListingService.findAllByUser(authentication);
         return ResponseEntity.ok(savedListings);
     }
 
     @PostMapping
     public ResponseEntity<SavedListingResponse> save(
-            @RequestParam UUID userId,
+            Authentication authentication,
             @RequestParam UUID postId
     ) {
-        SavedListingResponse response = savedListingService.save(userId, postId);
+        SavedListingResponse response = savedListingService.save(authentication, postId);
         return ResponseEntity.ok(response);
     }
 }
