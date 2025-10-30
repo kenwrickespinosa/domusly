@@ -24,6 +24,8 @@ public class SavedListingResponse {
     private int capacity;
     private BigDecimal price;
     private String username;
+    private String firstname;
+    private String lastname;
     private LocalDateTime createdAt;
     private List<String> amenityNames;
 }

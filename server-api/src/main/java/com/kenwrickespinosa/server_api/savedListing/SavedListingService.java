@@ -37,6 +37,8 @@ public class SavedListingService {
                 post.getCapacity(),
                 post.getPrice(),
                 post.getUser().getUsername(),
+                post.getUser().getFirstname(),
+                post.getUser().getLastname(),
                 post.getCreatedAt(),
                 amenityNames);
     }
