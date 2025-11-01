@@ -51,6 +51,7 @@ public class Post {
     private String propertyType;    // house | apartment | dorm | condo
     private int capacity;
     private BigDecimal price;
+    private double area;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

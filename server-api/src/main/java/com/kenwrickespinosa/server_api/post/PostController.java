@@ -2,6 +2,7 @@ package com.kenwrickespinosa.server_api.post;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,27 +24,33 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:5173")
 public class PostController {
-    
+
     private final PostService postService;
     private final UserRepository userRepository;
 
     @GetMapping
     public ResponseEntity<List<PostResponse>> findAll(
-        @RequestParam(required = false) String type,
-        @RequestParam(required = false) String propertyType
-    ) {
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) String propertyType) {
         List<PostResponse> posts = postService.findByFilters(type, propertyType);
         return ResponseEntity.ok(posts);
     }
 
     @PostMapping
-    public ResponseEntity<PostResponse> save(@RequestBody PostRequest postRequest) {
+    public ResponseEntity<?> save(@RequestBody PostRequest postRequest) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         String username = authentication.getName();
 
         User user = userRepository.findByUsername(username);
 
-        PostResponse savedPost = postService.save(postRequest, user.getUserId());
-        return ResponseEntity.ok(savedPost);
+        try {
+            PostResponse savedPost = postService.save(postRequest, user.getUserId());
+            return ResponseEntity.ok(savedPost);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error in saving post: " + e.getMessage());
+        }
     }
 }

@@ -22,6 +22,7 @@ public class PostRequest {
     private String propertyType;    // house | apartment | dorm | condo
     private int capacity;
     private BigDecimal price;
+    private double area;
 
     // private UUID userId;
 

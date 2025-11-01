@@ -10,8 +10,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, UUID> { 
-    @Query(
-        "SELECT p FROM Post p WHERE (:type IS NULL OR p.type = :type) AND (:propertyType IS NULL OR p.propertyType = :propertyType)"
-    )
+    @Query("""
+        SELECT DISTINCT p FROM Post p
+        LEFT JOIN FETCH p.amenities
+        WHERE (:type IS NULL OR p.type = :type)
+        AND (:propertyType IS NULL OR p.propertyType = :propertyType)
+        ORDER BY p.createdAt DESC
+    """)
     List<Post> findByFilters(@Param("type") String type, @Param("propertyType") String propertyType);
 }

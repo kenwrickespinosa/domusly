@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.hibernate.annotations.UuidGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kenwrickespinosa.server_api.post.Post;
 
 import jakarta.persistence.Column;
@@ -37,5 +38,6 @@ public class Amenity {
     private String name;
 
     @ManyToMany(mappedBy = "amenities")
+    @JsonIgnore
     private Set<Post> posts = new HashSet<>();
 }

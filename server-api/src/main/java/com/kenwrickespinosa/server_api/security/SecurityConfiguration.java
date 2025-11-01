@@ -58,8 +58,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authenticate ->
                         authenticate
                                 .requestMatchers("/api/auth/**").permitAll()
-                                .requestMatchers("/api/posts/**").permitAll()
-                                .requestMatchers("/api/saved-listings/**").permitAll()
+                                .requestMatchers("/api/posts/**").authenticated()
+                                .requestMatchers("/api/saved-listings/**").authenticated()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

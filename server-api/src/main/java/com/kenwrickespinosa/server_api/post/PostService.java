@@ -24,55 +24,56 @@ public class PostService {
     private final AmenityRepository amenityRepository;
 
     public List<PostResponse> findByFilters(String type, String propertyType) {
-        if (type != null && type.isBlank()) { type = null; }
-        if (propertyType != null && propertyType.isBlank()) { propertyType = null; }
+        if (type != null && type.isBlank()) {
+            type = null;
+        }
+        if (propertyType != null && propertyType.isBlank()) {
+            propertyType = null;
+        }
         List<Post> posts = postRepository.findByFilters(type, propertyType);
         List<PostResponse> response = new ArrayList<>();
         for (Post post : posts) {
-        List<String> amenityNames =
-        post.getAmenities().stream().map(Amenity::getName).toList();
-        List<UUID> amenityIds =
-        post.getAmenities().stream().map(Amenity::getAmenityId).toList();
-        response.add(
-        new PostResponse(
-        post.getPostId(),
-        post.getCaption(),
-        post.getLocation(),
-        post.getContact(),
-        post.getType(),
-        post.getPropertyType(),
-        post.getCapacity(),
-        post.getPrice(),
-        post.getUser().getUsername(),
-        post.getUser().getFirstname(),
-        post.getUser().getLastname(),
-        post.getCreatedAt(),
-        amenityIds,
-        amenityNames
-        )
-        );
+            List<String> amenityNames = post.getAmenities().stream().map(Amenity::getName).toList();
+            List<UUID> amenityIds = post.getAmenities().stream().map(Amenity::getAmenityId).toList();
+            response.add(
+                    new PostResponse(
+                            post.getPostId(),
+                            post.getCaption(),
+                            post.getLocation(),
+                            post.getContact(),
+                            post.getType(),
+                            post.getPropertyType(),
+                            post.getCapacity(),
+                            post.getPrice(),
+                            post.getArea(),
+                            post.getUser().getUsername(),
+                            post.getUser().getFirstname(),
+                            post.getUser().getLastname(),
+                            post.getCreatedAt(),
+                            amenityIds,
+                            amenityNames));
         }
         return response;
 
         // return posts.stream().map(post -> {
-        //     List<String> amenityNames = post.getAmenities().stream()
-        //             .map(Amenity::getName).toList();
-        //     List<UUID> amenityIds = post.getAmenities().stream()
-        //             .map(Amenity::getAmenityId).toList();
+        // List<String> amenityNames = post.getAmenities().stream()
+        // .map(Amenity::getName).toList();
+        // List<UUID> amenityIds = post.getAmenities().stream()
+        // .map(Amenity::getAmenityId).toList();
 
-        //     return new PostResponse(
-        //             post.getPostId(),
-        //             post.getCaption(),
-        //             post.getLocation(),
-        //             post.getContact(),
-        //             post.getType(),
-        //             post.getPropertyType(),
-        //             post.getCapacity(),
-        //             post.getPrice(),
-        //             post.getUser().getUsername(),
-        //             post.getCreatedAt(),
-        //             amenityIds,
-        //             amenityNames);
+        // return new PostResponse(
+        // post.getPostId(),
+        // post.getCaption(),
+        // post.getLocation(),
+        // post.getContact(),
+        // post.getType(),
+        // post.getPropertyType(),
+        // post.getCapacity(),
+        // post.getPrice(),
+        // post.getUser().getUsername(),
+        // post.getCreatedAt(),
+        // amenityIds,
+        // amenityNames);
         // }).toList();
     }
 
@@ -93,6 +94,7 @@ public class PostService {
         post.setPropertyType(postRequest.getPropertyType());
         post.setCapacity(postRequest.getCapacity());
         post.setPrice(postRequest.getPrice());
+        post.setArea(postRequest.getArea());
         post.setUser(user);
         post.setAmenities(amenities);
 
@@ -100,6 +102,14 @@ public class PostService {
 
         // List<UUID> postIdStream =
         // savedPost.getAmenities().stream().map(Amenity::getAmenityId).toList();
+
+        List<UUID> amenityIds = savedPost.getAmenities().stream()
+                .map(Amenity::getAmenityId)
+                .toList();
+
+        List<String> amenityNames = savedPost.getAmenities().stream()
+                .map(Amenity::getName)
+                .toList();
 
         return new PostResponse(
                 savedPost.getPostId(),
@@ -110,9 +120,13 @@ public class PostService {
                 savedPost.getPropertyType(),
                 savedPost.getCapacity(),
                 savedPost.getPrice(),
+                savedPost.getArea(),
                 savedPost.getUser().getUsername(),
                 savedPost.getUser().getFirstname(),
                 savedPost.getUser().getLastname(),
-                savedPost.getCreatedAt());
+                savedPost.getCreatedAt(),
+                amenityIds,
+                amenityNames
+        );
     }
 }
